@@ -1,0 +1,2 @@
+// Gantt chart visualization logic
+

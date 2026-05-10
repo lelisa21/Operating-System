@@ -1,0 +1,12 @@
+CC = gcc
+CFLAGS = -Iinclude -Wall
+
+all: scheduler
+
+scheduler: src/main.c
+	$(CC) $(CFLAGS) src/main.c -o scheduler
+
+clean:
+	rm -f scheduler
+
+.PHONY: all clean
