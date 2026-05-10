@@ -1,12 +1,45 @@
 CC = gcc
-CFLAGS = -Iinclude -Wall
+CFLAGS = -Wall -Wextra -Iinclude
 
-all: scheduler
+# Output binary
+TARGET = scheduler
 
-scheduler: src/main.c
-	$(CC) $(CFLAGS) src/main.c -o scheduler
+# Source files
+SRC = \
+src/main.c \
+src/engine/cpu.c \
+src/engine/scheduler.c \
+src/engine/clock.c \
+src/schedulers/fcfs.c \
+src/schedulers/sjf.c \
+src/core/input.c \
+src/core/queue.c \
+src/core/metrics.c \
+src/core/gantt.c \
+src/utils/sort.c \
+src/utils/helpers.c
 
+# Object files (auto-generated)
+OBJ = $(SRC:.c=.o)
+
+# Default build
+all: $(TARGET)
+
+# Link all object files
+$(TARGET): $(OBJ)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ)
+
+# Compile .c to .o
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Run program
+run: $(TARGET)
+	./$(TARGET)
+
+# Clean build files
 clean:
-	rm -f scheduler
+	rm -f $(OBJ) $(TARGET)
 
-.PHONY: all clean
+# Rebuild everything
+rebuild: clean all
